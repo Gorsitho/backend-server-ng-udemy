@@ -20,6 +20,15 @@ app.use(bodyParser.json())
 var appRoutes= require('./routes/app');
 var usuarioRoutes= require('./routes/usuario');
 var loginRoutes= require('./routes/login');
+//tarea-importaciones
+var hospitalRoutes= require('./routes/hospital');
+var medicoRoutes= require('./routes/medico');
+//busqueda
+var busquedaRoutes= require('./routes/busqueda');
+//subir archivos
+var uploadRoutes= require('./routes/upload');
+
+var imagenesRoutes= require('./routes/imagenes');
 
 //Conexion a la base de datos.
 
@@ -32,10 +41,27 @@ if(err) throw err;
 console.log('Base de datos: \x1b[32m%s\x1b[0m', 'online');
 
 });
+
+// Server index config
+/*
+
+// Genera una pequeña interfaz para las carpetas de las imagenes
+// Nota: Si alguien sabe la ruta puede ver cualquier imagen, no se recomienda esta practica.
+var serveIndex = require('serve-index');
+app.use(express.static(__dirname + '/'))
+app.use('/uploads', serveIndex(__dirname + '/uploads'));*/
+
+
 //Rutas
 
 app.use('/usuario',usuarioRoutes);
+app.use('/hospital',hospitalRoutes); // tarea
+app.use('/medico',medicoRoutes); // tarea
 app.use('/login',loginRoutes);
+app.use('/busqueda',busquedaRoutes);
+app.use('/upload',uploadRoutes);
+app.use('/img',imagenesRoutes);
+
 app.use('/',appRoutes);
 
 //Escuchar peticiones
