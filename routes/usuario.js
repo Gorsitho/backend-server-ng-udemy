@@ -25,7 +25,7 @@ app.get('/',(req,res,next)=>{
     desde=Number(desde);
 
 
-    Usuario.find({},'nombre email img role').skip(desde).limit(5).exec(
+    Usuario.find({},'nombre email img role google').skip(desde).limit(5).exec(
         (err,usuarios)=>{
 
         if(err){
@@ -91,7 +91,7 @@ app.use('/',(req,res,next)=>{
 
 
 
-app.put('/:id',mdAutenticacion.verificarToken,(req,res)=>{
+app.put('/:id',[mdAutenticacion.verificarToken,mdAutenticacion.verificaraADMIN_ROLE_o_MismoUsuario],(req,res)=>{
 
 var id = req.params.id;
 var body = req.body;
@@ -156,7 +156,7 @@ Usuario.findById(id,(err,usuario)=>{
 //  Crear un nuevo usuario
 //===============================================
 
-app.post('/',mdAutenticacion.verificarToken,(req,res)=>{
+app.post('/',(req,res)=>{
 
 
     var body = req.body;
@@ -197,7 +197,7 @@ app.post('/',mdAutenticacion.verificarToken,(req,res)=>{
 //  Eliminar usuarios por el id.
 //===============================================
 
-app.delete('/:id',mdAutenticacion.verificarToken,(req,res)=>{
+app.delete('/:id',[mdAutenticacion.verificarToken, mdAutenticacion.verificaraADMIN_ROLE],(req,res)=>{
 
     var id = req.params.id; // id por el /:id.
 
